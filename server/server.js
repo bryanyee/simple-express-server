@@ -23,7 +23,16 @@ app.get('/json', (req, res) => {
 });
 
 app.get('/timeout', (req, res) => {
-  res.status(408).send('Request timed out.');
+  let ms = 0;
+  if (req.query) {
+    const seconds = Number(req.query.seconds);
+    if (!isNaN(seconds)) {
+      ms = seconds * 1000;
+    }
+  }
+  setTimeout(() => {
+    res.status(408).send('Request timed out.');
+  }, ms);
 });
 
 app.use((req, res) => {
