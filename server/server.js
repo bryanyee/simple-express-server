@@ -8,6 +8,8 @@ app.get('/', (req, res) => {
   res.status(200).send('Welcome to port 3000!');
 })
 
+app.use(express.static(path.join(__dirname, 'assets', 'javascripts')));
+
 app.get('/json', (req, res) => {
   const peoplePath = path.join('server', 'data', 'people.json');
   fs.readFile(peoplePath, (err, data) => {
@@ -33,6 +35,19 @@ app.get('/timeout', (req, res) => {
   setTimeout(() => {
     res.status(408).send('Request timed out.');
   }, ms);
+});
+
+app.get('/block-thread', (req, res) => {
+  const blockThreadPath = path.join('server', 'views', 'blockThread.html');
+  fs.readFile(blockThreadPath, (err, html) => {
+    if (err) {
+      console.log(err);
+      res.status(500).send();
+    }
+    res.set('Content-Type', 'text/html')
+      .status(200)
+      .send(html);
+  });
 });
 
 app.use((req, res) => {
