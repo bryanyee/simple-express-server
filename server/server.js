@@ -54,6 +54,19 @@ app.get('/block-thread', (req, res) => {
   });
 });
 
+app.get('/vote', (req, res) => {
+  const votePath = path.join('server', 'views', 'vote.html');
+  fs.readFile(votePath, (err, html) => {
+    if (err) {
+      console.log(err);
+      res.status(500).send();
+    }
+    res.set('Content-Type', 'text/html')
+      .status(200)
+      .send(html);
+  });
+});
+
 app.post('/vote-submission', (req, res) => {
   res.status(200).send('Submitted!');
 })
