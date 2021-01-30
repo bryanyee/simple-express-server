@@ -1,6 +1,7 @@
 const express = require('express');
 const fs = require('fs');
 const path = require('path');
+const bodyParser = require('body-parser');
 
 const app = express();
 
@@ -9,6 +10,8 @@ app.get('/', (req, res) => {
 })
 
 app.use(express.static(path.join(__dirname, 'assets', 'javascripts')));
+
+app.use(bodyParser.json())
 
 app.get('/json', (req, res) => {
   const peoplePath = path.join(__dirname, 'data', 'people.json');
@@ -49,6 +52,10 @@ app.get('/block-thread', (req, res) => {
       .send(html);
   });
 });
+
+app.post('/vote-submission', (req, res) => {
+  res.status(200).send('Submitted!');
+})
 
 app.use((req, res) => {
   res.status(404).send('Sorry, we cannot find that!');
