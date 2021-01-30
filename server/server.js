@@ -12,6 +12,7 @@ app.get('/', (req, res) => {
 app.use(express.static(path.join(__dirname, 'assets', 'javascripts')));
 
 app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: false }))
 
 app.get('/json', (req, res) => {
   const peoplePath = path.join(__dirname, 'data', 'people.json');
